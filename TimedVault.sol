@@ -11,10 +11,12 @@ pragma solidity ^0.4.22;
     uint vaultTime;
     address private owner;
     
-    constructor() public {
+    event Status(string, uint256, address); 
+    
+     constructor(uint256) public payable {
         start = now; //now is alias block.time
         vaultTime = start + 1 minutes; //change to x minutes, x days, x years...
-        balance = 0;
+        balance = 0 + msg.value;
         owner = msg.sender;
     }
     
@@ -30,13 +32,15 @@ pragma solidity ^0.4.22;
     	    kill();
         }
         else{
-             return vaultTime - now; //return time remaining in seconds
+            emit Status ('Funds cannot be withdrawn right now. Time remaining (minutes): ', (vaultTime - now) / 60, msg.sender);
+            return vaultTime - now; //return time remaining in seconds
         }
     }
     
     function deposit() public payable returns (uint){
             assert(msg.value > 0);
             setBalance(msg.value);
+            emit Status ('Funds have been deposited', msg.value, msg.sender);
             return getBalance(); //return with accumulated balance
     }
     
