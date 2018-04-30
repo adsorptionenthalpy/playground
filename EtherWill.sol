@@ -49,7 +49,7 @@ contract EtherWill {
             giveMoneyToBeneficiary();
         }
         else {
-            emit Status ('Im still alive', msg.sender, block.timestamp);
+            stillAlive();
         }
     }
 
