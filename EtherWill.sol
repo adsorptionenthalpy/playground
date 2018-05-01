@@ -49,7 +49,8 @@ contract EtherWill {
             giveMoneyToBeneficiary();
         }
         else {
-            stillAlive();
+             lastTouched = block.timestamp; //Every time the beneficiary checks if the testator is still alive, he lives a little longer :)
+             emit Status('Im still alive!', msg.sender, block.timestamp);
         }
     }
 
@@ -62,4 +63,3 @@ contract EtherWill {
         }
     }        
 }
-    
